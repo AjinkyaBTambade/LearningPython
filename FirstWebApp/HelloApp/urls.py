@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, about,contact,catalog,flowers,customers
+from .views import home,login,about,contact,catalog,flowers,customers
 
 urlpatterns=[
     path('', home, name='home'),
@@ -8,4 +8,6 @@ urlpatterns=[
     path('catalog', catalog, name='catalog'),
     path('flowers', flowers, name='flowers'),
     path('customers', customers, name='customers'),
+    path('login', login, name='login'),
+
 ]

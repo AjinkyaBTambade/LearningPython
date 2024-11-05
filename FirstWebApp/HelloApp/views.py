@@ -20,6 +20,9 @@ def contact(request):
     #return HttpResponse("<p>601, Rama Apartment , Walwekar Nagar </p>")
     return render(request, 'HelloApp/home/contact.html')
 
+def login(request):
+    return render(request, 'HelloApp/home/login.html')
+
 def catalog(request):
     products = [
     {"name": "Laptop", "description": "A high-performance laptop", "price": 999.99},
