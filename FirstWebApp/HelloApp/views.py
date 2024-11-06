@@ -1,27 +1,23 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-
+from django.http import HttpResponse
 
 from .models import Customer, Product
-
-#action methods
-
+from .forms import LoginForm,RegisterForm
 
 def home(request):
     #return HttpResponse("Welcome to Transflower")
-    return render(request, 'HelloApp/home/home.html')
+    return render(request, 'HelloApp/home.html')
 
 def about(request):
     #return HttpResponse("Transflower Learning Pvt. Ltd.")
-    return render(request, 'HelloApp/home/about.html')
+    return render(request, 'HelloApp/about.html')
    
 def contact(request):
-    #return render(request, 'HelloApp/home.html')
-    #return HttpResponse("<p>601, Rama Apartment , Walwekar Nagar </p>")
-    return render(request, 'HelloApp/home/contact.html')
+    #return HttpResponse("Transflower Learning Pvt. Ltd.")
+    return render(request, 'HelloApp/contact.html')
 
 def login(request):
-    return render(request, 'HelloApp/home/login.html')
+    return render(request,'HelloApp/login.html')
 
 def catalog(request):
     products = [
@@ -31,7 +27,7 @@ def catalog(request):
     {"name": "Keyboard", "description": "Mechanical keyboard with RGB lighting", "price": 129.99},
     {"name": "Mouse", "description": "Wireless ergonomic mouse", "price": 49.99}
     ]
-    return render(request, 'HelloApp/catalog/list.html',{'products': products})
+    return render(request, 'HelloApp/list.html',{'products': products})
 
 def flowers(request):
     flowers = [
@@ -41,8 +37,7 @@ def flowers(request):
         Product("Lily", "Delicate Flower", 76),
         Product("Lotus", "worship", 12),
     ]
-    return render(request, 'HelloApp/catalog/list.html',{'products': flowers})
-    # return JsonResponse({'products': flowers})
+    return render(request, 'HelloApp/list.html',{'products': flowers})
 
 def customers(request):
 
@@ -56,4 +51,31 @@ def customers(request):
     Customer("Seema", "sachin.t@gmail.com", "988767654"),
     ]
 
-    return render(request, 'HelloApp/crm/customers.html',{'customers': customers})
+    return render(request, 'HelloApp/customers.html',{'customers': customers})
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            return render(request,'HelloApp/welcome.html',{'password':password,'email':email})
+    else:
+        form = LoginForm()
+    return render(request,'HelloApp/login.html',{'form':form})
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            location = form.cleaned_data['location']
+            contactnumber = form.cleaned_data['contactnumber']
+            firstname = form.cleaned_data['firstname']
+            lastname = form.cleaned_data['lastname']
+
+            return render(request,'HelloApp/welcome.html',{'email':email,'password':'manasi'})
+    else:
+        form = RegisterForm()
+    return render(request,'HelloApp/register.html',{'form':form})
